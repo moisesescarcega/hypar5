@@ -96,10 +96,10 @@ filteredGltfFiles.forEach((file) => {
   if (configuration.suspense) args.push('--suspense')
   if (configuration.isolated) args.push('--isolated')
   if (configuration.transform.enabled) {
-    args.push(`--transform`)
+    args.push('--transform')
     args.push(`--resolution ${configuration.transform.resolution}`)
     if (configuration.transform.simplify.enabled) {
-      args.push(`--simplify`)
+      args.push('--simplify')
       args.push(`--weld ${configuration.transform.simplify.weld}`)
       args.push(`--ratio ${configuration.transform.simplify.ratio}`)
       args.push(`--error ${configuration.transform.simplify.error}`)
