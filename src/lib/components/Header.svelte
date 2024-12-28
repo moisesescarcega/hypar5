@@ -22,10 +22,9 @@
   
   <style>
     header {
-      font-family:'Courier New', Courier, monospace;
       font-size: 0.8rem;
       width: 100%;
-      padding: 1rem 1rem;
+      padding: 0.1rem 1rem;
       background-color: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(10px);
       position: fixed;

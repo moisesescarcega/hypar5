@@ -1,8 +1,9 @@
 <script lang="ts">
   import { T } from '@threlte/core';
-  import { Vector3, BufferGeometry, Float32BufferAttribute, Plane, DoubleSide } from 'three';
+  import { Vector3, BufferGeometry, Float32BufferAttribute } from 'three';
+  import { Plane } from 'three';
   import { NURBSSurface } from 'three/examples/jsm/curves/NURBSSurface.js';
-  import { ParametricGeometry } from 'three/examples/jsm/Addons.js';
+  import { NURBSUtils } from 'three/examples/jsm/Addons.js';
   export let vertexX: number;
   export let vertexY: number;
   export let vertexZ: number;
@@ -50,31 +51,50 @@
   }
 
   // Define control points and knots for the NURBS surface
-  const degree1 = 1;
-  const degree2 = 1;
-  let controlPoints = [
+  const degree1 = 2;
+  const degree2 = 2;
+  const controlPoints = [
     [
-      new Vector3(vertexX, vertexZ, 0),
-      new Vector3(0, -vertexZ, vertexY)
+      new Vector3(-1, -1, 0),
+      new Vector3(-0.5, -1, 0.5),
+      new Vector3(0, -1, 0)
     ],
     [
-      new Vector3(0, -vertexZ, -vertexY),
-      new Vector3(-vertexX, vertexZ, 0)
+      new Vector3(-1, 0, 0.5),
+      new Vector3(-0.5, 0, 1),
+      new Vector3(0, 0, 0.5)
+    ],
+    [
+      new Vector3(-1, 1, 0),
+      new Vector3(-0.5, 1, 0.5),
+      new Vector3(0, 1, 0)
     ]
   ];
-  const knots1 = [0, 0, 1, 1];
-  const knots2 = [0, 0, 1, 1];
+  const knots1 = [0, 0, 0, 1, 1, 1];
+  const knots2 = [0, 0, 0, 1, 1, 1];
 
-  let nurbsSurface = new NURBSSurface(degree1, degree2, knots1, knots2, controlPoints);
+  const nurbsSurface = new NURBSSurface(degree1, degree2, knots1, knots2, controlPoints);
 
-  function getSurfacePoints (u: number, v: number, target: Vector3) {
-    return nurbsSurface.getPoint(u, v, target)
+  const getSurfacePoint = (u: number, v: number): Vector3 => {
+      const point = new Vector3();
+      nurbsSurface.getPoint(u, v, point);
+      return point;
+  };
+
+  const nurbsGeometry = new BufferGeometry();
+  const nurbsVertices = [];
+  const divisions = 10;
+
+  for (let i = 0; i <= divisions; i++) {
+    for (let j = 0; j <= divisions; j++) {
+      const u = i / divisions;
+      const v = j / divisions;
+      const point = getSurfacePoint(u, v);
+      nurbsVertices.push(point.x, point.y, point.z);
+    }
   }
 
-  let nurbsGeometry: ParametricGeometry;
-  $: {
-    nurbsGeometry = new ParametricGeometry(getSurfacePoints, segments, segments);
-  }
+  nurbsGeometry.setAttribute('position', new Float32BufferAttribute(nurbsVertices, 3));
 
 </script>
 
@@ -95,10 +115,12 @@
   <T.MeshBasicMaterial color="yellow" />
 </T.Mesh>
 
-<T.Mesh geometry={nurbsGeometry} >
-  <T.MeshStandardMaterial color="blue" side={DoubleSide} wireframe />
-</T.Mesh>
 <T.LineSegments>
   <T.BufferGeometry bind:ref={geometryLine} />
   <T.LineBasicMaterial color="red" clippingPlanes={clipPlane} />
 </T.LineSegments>
+
+<T.Mesh>
+  <T.BufferGeometry geometry={nurbsGeometry} />
+  <T.MeshBasicMaterial color="blue" clippingPlanes={clipPlane} />
+</T.Mesh>

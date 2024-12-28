@@ -6,12 +6,12 @@
   let segments = writable(12); // Define segments as a writable store
 
   function handleSegments(event: Event) {
-    const value = (event.target as HTMLInputElement).valueAsNumber;
-    segments.set(value); // Update segments value
+    const target = event.target as HTMLInputElement;
+    segments.set(Number(target.value)); // Update segments value
   }
 </script>
 
-<section class='static flex flex-col p-2 m-2 bg-gray-200 rounded-md shadow-md opacity-75 hover:opacity-100 appearance-none z-[9999] w-[360px]'>
+<section class='absolute flex flex-col p-2 m-2 bg-gray-200 rounded-md shadow-md opacity-75 hover:opacity-100 appearance-none z-[9999] w-[360px]'>
   <h5 class="w-full my-0 py-0"><strong>Hypar</strong></h5>
 
   <div class='flex flex-row justify-between items-center'>
@@ -82,7 +82,6 @@
 
 <style>
   section {
-    margin-top: 3rem;
     font-size: small;
   }
 </style>

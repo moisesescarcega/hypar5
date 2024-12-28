@@ -28,4 +28,4 @@
 </T.PerspectiveCamera>
 <T.AmbientLight position={[0, 2, 4]} intensity={Math.PI / 8} />
 <T.SpotLight position={[2, 0, 2]} intensity={Math.PI} />
-<Ruled {segments} vertexX={11} vertexY={7} vertexZ={13} />
+<Ruled segments={segments} vertexX={11} vertexY={7} vertexZ={13} />
