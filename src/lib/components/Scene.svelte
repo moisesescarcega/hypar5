@@ -5,7 +5,7 @@
   import { T } from '@threlte/core';
   import { OrbitControls } from '@threlte/extras';
   import Ruled from './Ruled.svelte'; 
-  export let segments: number; // Add this line to accept segments as a prop
+  export let segments: number;
 
   onMount(() => {
     const {renderer} = useThrelte() as {renderer: WebGLRenderer};
