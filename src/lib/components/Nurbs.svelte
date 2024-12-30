@@ -27,7 +27,7 @@
         function getSurfacePoints (u: number, v: number, target: Vector3) {
             return nurbsSurface.getPoint(u, v, target)
         }
-        nurbsGeometry = new ParametricGeometry(getSurfacePoints, 12, 12);
+        nurbsGeometry = new ParametricGeometry(getSurfacePoints, 33, 33);
     });
 </script>
 

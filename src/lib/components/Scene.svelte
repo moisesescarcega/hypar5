@@ -4,15 +4,15 @@
   import type { WebGLRenderer } from 'three';
   import { T } from '@threlte/core';
   import { OrbitControls } from '@threlte/extras';
-  import Ruled from './RuledAlt.svelte'; 
+  import Ruled from './Ruled.svelte'; 
   import Nurbs from './Nurbs.svelte';
   let { vertexX, vertexY, vertexZ, segments } = $props();
-  // export let segments: number; 
 
   onMount(() => {
     const {renderer} = useThrelte() as {renderer: WebGLRenderer};
     renderer.localClippingEnabled = true;
   });
+
 </script>
 
 <T.PerspectiveCamera
@@ -47,4 +47,4 @@
   <T.MeshBasicMaterial color="yellow" />
 </T.Mesh>
 <Ruled segments={segments} vertexX={vertexX} vertexY={vertexY} vertexZ={vertexZ} />
-<Nurbs vertexX={vertexX} vertexY={vertexY} vertexZ={vertexZ} />
+<!-- <Nurbs vertexX={vertexX} vertexY={vertexY} vertexZ={vertexZ} /> -->

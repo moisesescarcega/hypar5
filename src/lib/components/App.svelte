@@ -1,19 +1,12 @@
 <script lang="ts">
   import { Canvas } from '@threlte/core';
   import Scene from './Scene.svelte';
-  import { writable } from 'svelte/store';
-
   const configs = $state({
     vertexX: 11,
     vertexY: 7,
     vertexZ: 13,
-    segments: 12
+    segments: 45
   });
-
-  // function handleSegments(event: Event) {
-  //   const value = (event.target as HTMLInputElement).valueAsNumber;
-  //   segments.set(value); // Update segments value
-  // }
 </script>
 
 <section class='static flex flex-col p-2 m-2 bg-gray-200 rounded-md shadow-md opacity-75 hover:opacity-100 appearance-none z-[9999] w-[360px]'>
@@ -33,8 +26,7 @@
   </div>
 
   <div class='flex flex-row justify-between items-center'>
-    <!-- svelte-ignore a11y_label_has_associated_control -->
-    <label class="w-[100px]">Vértice Y:&nbsp;</label>
+    <label for='rango-vertexY' class="w-[100px]">Vértice Y:&nbsp;</label>
     <input
       id='rango-vertexY'
       type='range'
@@ -43,13 +35,11 @@
       max='50'
       class='w-full h-2 mx-3 bg-gray-500 rounded-lg appearance-none cursor-pointer dark:bg-gray-700'
     />
-    <!-- svelte-ignore a11y_label_has_associated_control -->
-    <label class='w-8 text-right'>{configs.vertexY}</label>
+    <label for='rango-vertexY' class='w-8 text-right'>{configs.vertexY}</label>
   </div>
 
   <div class='flex flex-row justify-between items-center'>
-    <!-- svelte-ignore a11y_label_has_associated_control -->
-    <label class="w-[100px]">Vértice Z:&nbsp;</label>
+    <label for='rango-vertexZ' class="w-[100px]">Vértice Z:&nbsp;</label>
     <input
       id='rango-vertexZ'
       type='range'
@@ -58,13 +48,11 @@
       max='50'
       class='w-full h-2 mx-3 bg-gray-500 rounded-lg appearance-none cursor-pointer dark:bg-gray-700'
     />
-    <!-- svelte-ignore a11y_label_has_associated_control -->
-    <label class='w-8 text-right'>{configs.vertexZ}</label>
+    <label for='rango-vertexZ' class='w-8 text-right'>{configs.vertexZ}</label>
   </div>
 
   <div class='flex flex-row justify-between items-center'>
-    <!-- svelte-ignore a11y_label_has_associated_control -->
-    <label>Segmentos:&nbsp;</label>
+    <label for='segments-range'>Segmentos:&nbsp;</label>
     <input
       id='segments-range'
       type='range'
@@ -73,8 +61,7 @@
       max='300'
       class='w-full h-2 mx-3 bg-gray-500 rounded-lg appearance-none cursor-pointer dark:bg-gray-700'
     />
-    <!-- svelte-ignore a11y_label_has_associated_control -->
-    <label class='w-10 text-right'>{configs.segments}</label>
+    <label for='segments-range' class='w-10 text-right'>{configs.segments}</label>
   </div>
 </section>
 
