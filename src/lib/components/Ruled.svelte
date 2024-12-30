@@ -1,6 +1,6 @@
 <script lang="ts">
   import { T } from '@threlte/core';
-  import { Vector3, BufferGeometry, Float32BufferAttribute, Plane } from 'three';
+  import { Vector3, BufferGeometry, Float32BufferAttribute, Plane, MathUtils } from 'three';
 
   let {vertexX, vertexY, vertexZ, segments} = $props();
 
@@ -41,16 +41,19 @@
     }
   });
 
-  let clipPlane: Plane[] = [new Plane(new Vector3(1, 0, 0), 0)];
+  let axisY = new Vector3(0, 1, 0);
+  let axisX = new Vector3(0, 0, 1);
+  let rotacion = MathUtils.degToRad(45);
+  let rotacionPlanoDeCorte = MathUtils.degToRad(60);
+  let clipPlane: Plane[] = [
+    new Plane(new Vector3(1, 0, 0).applyAxisAngle(axisY, rotacion), 0),
+    new Plane(new Vector3(1, 0, 0).applyAxisAngle(axisY, -rotacion), 0),
+    new Plane(new Vector3(0, 1, 0).applyAxisAngle(axisX, rotacionPlanoDeCorte), 3),
+  ];
 </script>
 
-<!-- <T.Mesh>
-  <T.BoxGeometry args={[vertexX, 2, 2]} />
-  <T.MeshBasicMaterial color="red" />
-</T.Mesh> -->
-  <!-- Renderizado de líneas -->
-  <T.LineSegments>
-    <T.BufferGeometry bind:ref={geometryLine} />
-    <T.LineBasicMaterial color="red" clippingPlanes={clipPlane} />
-  </T.LineSegments>
+<T.LineSegments>
+  <T.BufferGeometry bind:ref={geometryLine} />
+  <T.LineBasicMaterial color="red" />
+</T.LineSegments>
   
