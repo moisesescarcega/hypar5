@@ -5,6 +5,7 @@
   import { T } from '@threlte/core';
   import { OrbitControls } from '@threlte/extras';
   import Ruled from './RuledAlt.svelte'; 
+  import Nurbs from './Nurbs.svelte';
   let { vertexX, vertexY, vertexZ, segments } = $props();
   // export let segments: number; 
 
@@ -46,3 +47,4 @@
   <T.MeshBasicMaterial color="yellow" />
 </T.Mesh>
 <Ruled segments={segments} vertexX={vertexX} vertexY={vertexY} vertexZ={vertexZ} />
+<Nurbs vertexX={vertexX} vertexY={vertexY} vertexZ={vertexZ} />
