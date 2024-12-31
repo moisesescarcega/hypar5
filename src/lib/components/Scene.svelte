@@ -6,7 +6,7 @@
   import { OrbitControls } from '@threlte/extras';
   import Ruled from './Ruled.svelte'; 
   import Nurbs from './Nurbs.svelte';
-  let { vertexX, vertexY, vertexZ, segments } = $props();
+  let { mantos, vertexX, vertexY, vertexZ, segments } = $props();
 
   onMount(() => {
     const {renderer} = useThrelte() as {renderer: WebGLRenderer};
@@ -46,5 +46,11 @@
   <T.BoxGeometry args={[0.2, 0.2, 0.2]} />
   <T.MeshBasicMaterial color="yellow" />
 </T.Mesh>
-<Ruled segments={segments} vertexX={vertexX} vertexY={vertexY} vertexZ={vertexZ} />
+{#snippet ruled(rota:number, segments:number, vertexX:number, vertexY:number, vertexZ:number)}
+  <Ruled rota={rota} segments={segments} vertexX={vertexX} vertexY={vertexY} vertexZ={vertexZ} />
+{/snippet}
+{#each {length: mantos}, i}
+  {@render ruled((360 / mantos) * i, segments, vertexX, vertexY, vertexZ)}
+{/each}
+
 <!-- <Nurbs vertexX={vertexX} vertexY={vertexY} vertexZ={vertexZ} /> -->

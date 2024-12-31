@@ -2,7 +2,7 @@
   import { T } from '@threlte/core';
   import { Vector3, BufferGeometry, Float32BufferAttribute, Plane, MathUtils } from 'three';
 
-  let {vertexX, vertexY, vertexZ, segments} = $props();
+  let {rota, vertexX, vertexY, vertexZ, segments} = $props();
 
   let vertices = $derived([
     new Vector3(0, -vertexZ, -vertexY),
@@ -50,10 +50,13 @@
     new Plane(new Vector3(1, 0, 0).applyAxisAngle(axisY, -rotacion), 0),
     new Plane(new Vector3(0, 1, 0).applyAxisAngle(axisX, rotacionPlanoDeCorte), 3),
   ];
+  let anguloPorManto = 360 / rota;
 </script>
 
-<T.LineSegments>
-  <T.BufferGeometry bind:ref={geometryLine} />
-  <T.LineBasicMaterial color="red" />
-</T.LineSegments>
+<!-- {#each {length: 3}, i} -->
+  <T.LineSegments rotation.y={MathUtils.degToRad(rota)} >
+    <T.BufferGeometry bind:ref={geometryLine} />
+    <T.LineBasicMaterial color="red" />
+  </T.LineSegments>
+<!-- {/each} -->
   
