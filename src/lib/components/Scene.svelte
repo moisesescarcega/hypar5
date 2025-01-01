@@ -46,11 +46,12 @@
   <T.BoxGeometry args={[0.2, 0.2, 0.2]} />
   <T.MeshBasicMaterial color="yellow" />
 </T.Mesh>
-{#snippet ruled(rota:number, segments:number, vertexX:number, vertexY:number, vertexZ:number)}
-  <Ruled rota={rota} segments={segments} vertexX={vertexX} vertexY={vertexY} vertexZ={vertexZ} />
+{#snippet ruled(index:number, mantos:number, segments:number, vertexX:number, vertexY:number, vertexZ:number)}
+  <Ruled {index} {mantos} {segments} {vertexX} {vertexY} {vertexZ} />
 {/snippet}
+<!-- {@render ruled((360 / mantos), mantos, segments, vertexX, vertexY, vertexZ)} -->
 {#each {length: mantos}, i}
-  {@render ruled((360 / mantos) * i, segments, vertexX, vertexY, vertexZ)}
+  {@render ruled(i, mantos, segments, vertexX, vertexY, vertexZ)}
 {/each}
 
 <!-- <Nurbs vertexX={vertexX} vertexY={vertexY} vertexZ={vertexZ} /> -->

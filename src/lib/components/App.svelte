@@ -27,7 +27,7 @@
       <label for='{identif}' class='w-8 text-right'>{config}</label>
     </div>
   {/snippet}
-  {@render valores('rango-mantos', configs.mantos, 1, 10, 'Mantos', (e) => configs.mantos = +(e.target as HTMLInputElement).value)}
+  {@render valores('rango-mantos', configs.mantos, 3, 10, 'Mantos', (e) => configs.mantos = +(e.target as HTMLInputElement).value)}
   {@render valores('rango-vertexX', configs.vertexX, 3, 50, 'Vértice X', (e) => configs.vertexX = +(e.target as HTMLInputElement).value)}
   {@render valores('rango-vertexY', configs.vertexY, 3, 50, 'Vértice Y', (e) => configs.vertexY = +(e.target as HTMLInputElement).value)}
   {@render valores('rango-vertexZ', configs.vertexZ, 3, 50, 'Vértice Z', (e) => configs.vertexZ = +(e.target as HTMLInputElement).value)}
