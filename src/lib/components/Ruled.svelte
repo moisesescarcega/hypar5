@@ -1,10 +1,12 @@
 <script lang="ts">
   import { T } from '@threlte/core';
   import { Vector3, BufferGeometry, Float32BufferAttribute, Plane, MathUtils } from 'three';
+  import { calculateClipPlanes } from './ClippingPlanes';
 
   let {index, mantos, vertexX, vertexY, vertexZ, segments} = $props();
 
   let rotacion = $derived(360 / mantos);
+  let clipPlane = $derived(calculateClipPlanes({index, mantos, rotacion}));
   let vertices = $derived([
     new Vector3(0, -vertexZ, -vertexY),
     new Vector3(vertexX, vertexZ, 0),
@@ -46,20 +48,6 @@
     }
   });
 
-  let axisY = new Vector3(0, 1, 0);
-  let axisZ = new Vector3(-1, 0, 0);
-  const anguloPorManto = $derived(360 / mantos);
-  const medioAnguloPorManto = $derived(180 / mantos);
-  let rotacionPlanoCorte = $derived(MathUtils.degToRad((anguloPorManto * index) + medioAnguloPorManto));
-  let rotacionPlanoInclinado = $derived(MathUtils.degToRad(90 + (rotacion * index)));
-  let clipPlane = $derived([
-    new Plane(new Vector3(0, 0, 1).applyAxisAngle(axisY, rotacionPlanoCorte), 0),
-    new Plane(new Vector3(0, 0, -1).applyAxisAngle(axisY, rotacionPlanoCorte + MathUtils.degToRad(-anguloPorManto)), 0),
-    new Plane(new Vector3(0, 0, -1)
-    .applyAxisAngle(axisZ, MathUtils.degToRad(-15))
-    .applyAxisAngle(axisY, rotacionPlanoInclinado),
-    4)
-  ]);
 </script>
 
 <T.LineSegments rotation.y={MathUtils.degToRad(rotacion * index)} >
