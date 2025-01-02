@@ -19,11 +19,19 @@ const configurations = [
   const vertexY = new Tween(14, { duration: 2000 });
   const vertexZ = new Tween(26, { duration: 2000 });
 
-  let segments = $state(60);
-  let dmantos = $state(mantos);
-  let dvertexX = $state(vertexX);
-  let dvertexY = $state(vertexY);
-  let dvertexZ = $state(vertexZ);
+  const configs = $derived({
+    mantos: mantos,
+    vertexX: vertexX,
+    vertexY: vertexY,
+    vertexZ: vertexZ,
+    segments: 45
+  });
+
+  // let segments = $state(60);
+  // let dmantos = $state(mantos);
+  // let dvertexX = $state(vertexX);
+  // let dvertexY = $state(vertexY);
+  // let dvertexZ = $state(vertexZ);
 
   // Actualizar valores cíclicamente
   let currentIndex = $state(0);
@@ -82,6 +90,19 @@ const configurations = [
       />
       <label for='rango-mantos' class='w-8 text-right'>{mantos.target.toFixed(1)}</label>
     </div>
+    <div class='flex flex-row justify-between items-center'>
+      <label for='rango-X' class="w-[100px]">vX&nbsp;</label>
+      <input
+        id='rango-X'
+        type='range'
+        bind:value={vertexX.target}
+        min=3
+        max=50
+        oninput={(e) => vertexX.target = +(e.target as HTMLInputElement).value}
+        class='w-full h-2 mx-3 bg-gray-500 rounded-lg appearance-none cursor-pointer dark:bg-gray-700'
+      />
+      <label for='rango-X' class='w-8 text-right'>{vertexX.target.toFixed(1)}</label>
+    </div>
   <!-- {/snippet}
   {@render valores('rango-mantos', mantos.target, 3, 10, 'Mantos', (e) => mantos.target = +(e.target as HTMLInputElement).value)}
   {@render valores('rango-vertexX', vertexX.target, 3, 50, 'Vértice X', (e) => vertexX.target = +(e.target as HTMLInputElement).value)}
@@ -94,7 +115,7 @@ const configurations = [
   <Scene {...configs} />
 </Canvas> -->
 <Canvas>
-  <Scene mantos={dmantos} vertexX={dvertexX} vertexY={dvertexY} vertexZ={dvertexZ} {segments} />
+  <Scene {...configs} />
 </Canvas>
 
 <style lang="postcss">
