@@ -1,8 +1,9 @@
 <script lang="ts">
   import { Canvas } from '@threlte/core';
-  import Scene from './Scene.svelte';
   import { Tween } from 'svelte/motion';
   import { onDestroy } from 'svelte';
+  import { cubicOut } from 'svelte/easing';
+  import Scene from './Scene.svelte';
 
   const configurations = [
     { hypar: 'Pabellón Oslo', mantos: 3, vertexX: 22, vertexY: 14, vertexZ: 26 },
@@ -17,7 +18,8 @@
     vertexY: configurations[0].vertexY,
     vertexZ: configurations[0].vertexZ
   }, {
-    duration: 150
+    duration: 240,
+    easing: cubicOut
   });
 
   let configs = $derived({
@@ -88,7 +90,7 @@
         value={config}
         min={min}
         max={max}
-        onchange={(e) => updateValue(key, +(e.target as HTMLInputElement).value)}
+        oninput={(e) => updateValue(key, +(e.target as HTMLInputElement).value)}
         disabled={isPlaying}
         class='w-full h-2 mx-3 bg-gray-500 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 disabled:opacity-50'
       />
@@ -117,7 +119,7 @@
 </section>
 
 <Canvas>
-  <Scene {...configs} segments={segments} />
+  <Scene {...configs} {segments} />
 </Canvas>
 
 <style lang="postcss">
