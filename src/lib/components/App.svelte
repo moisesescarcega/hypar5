@@ -1,92 +1,55 @@
 <script lang="ts">
   import { Canvas } from '@threlte/core';
-  import { spring } from 'svelte/motion';
+  import { Tween } from 'svelte/motion';
   import Scene from './Scene.svelte';
-	import { onDestroy } from 'svelte';
+	// import { onDestroy } from 'svelte';
+  import { onMount } from 'svelte';
   
-  // const configs = $state({
-  //   mantos: 3,
-  //   vertexX: 11,
-  //   vertexY: 7,
-  //   vertexZ: 13,
-  //   segments: 45
-  // });
-
-    // Definimos las configuraciones
-    const configurations = [
+// Arreglo de configuraciones
+const configurations = [
     { hypar: 'Pabellón Oslo', mantos: 3, vertexX: 22, vertexY: 14, vertexZ: 26 },
     { hypar: 'Casino de la Selva', mantos: 5, vertexX: 30, vertexY: 10, vertexZ: 27 },
     { hypar: 'San Antonio de las Huertas', mantos: 4, vertexX: 30, vertexY: 14, vertexZ: 43 },
     { hypar: 'Manantiales', mantos: 8, vertexX: 37, vertexY: 9, vertexZ: 26 }
   ];
 
-  // Estado inicial y controles de animación
+  // Crear objetos Spring para valores animados
+  const mantos = new Tween(3, { duration: 2000 });
+  const vertexX = new Tween(22, { duration: 2000 });
+  const vertexY = new Tween(14, { duration: 2000 });
+  const vertexZ = new Tween(26, { duration: 2000 });
+
+  let segments = $state(60);
+  let dmantos = $state(mantos);
+  let dvertexX = $state(vertexX);
+  let dvertexY = $state(vertexY);
+  let dvertexZ = $state(vertexZ);
+
+  // Actualizar valores cíclicamente
   let currentIndex = $state(0);
-  let isPlaying = $state(false);
-  let intervalId: number;
-  
-  // Creamos springs para cada valor que queremos animar
-  const animatedValues = spring(
-    { 
-      mantos: configurations[0].mantos,
-      vertexX: configurations[0].vertexX,
-      vertexY: configurations[0].vertexY,
-      vertexZ: configurations[0].vertexZ
-    }, 
-    {
-      stiffness: 0.04,
-      damping: 0.9
-    }
-  );
+  onMount(() => {
+    const interval = setInterval(() => {
+      currentIndex = (currentIndex + 1) % configurations.length;
+      const currentConfig = configurations[currentIndex];
+      mantos.target = currentConfig.mantos;
+      vertexX.target = currentConfig.vertexX;
+      vertexY.target = currentConfig.vertexY;
+      vertexZ.target = currentConfig.vertexZ;
+    }, 5000);
 
-  // Estado derivado que combina los valores animados con segments
-  const configs = $derived({
-    mantos: Math.round($animatedValues.mantos),
-    vertexX: $animatedValues.vertexX,
-    vertexY: $animatedValues.vertexY,
-    vertexZ: $animatedValues.vertexZ,
-    segments: 45
-  });
-
-  // Función para actualizar a la siguiente configuración
-  function updateConfiguration() {
-    currentIndex = (currentIndex + 1) % configurations.length;
-    const nextConfig = configurations[currentIndex];
-    animatedValues.set({
-      mantos: nextConfig.mantos,
-      vertexX: nextConfig.vertexX,
-      vertexY: nextConfig.vertexY,
-      vertexZ: nextConfig.vertexZ
-    });
-  }
-
-  // Función para controlar la reproducción
-  function togglePlay() {
-    isPlaying = !isPlaying;
-    if (isPlaying) {
-      // Iniciamos el intervalo
-      intervalId = setInterval(updateConfiguration, 8000);
-    } else {
-      // Detenemos el intervalo
-      clearInterval(intervalId);
-    }
-  }
-
-  // Limpiamos el intervalo cuando el componente se desmonta
-  onDestroy(() => {
-    if (intervalId) clearInterval(intervalId);
+    return () => clearInterval(interval); // Limpiar intervalo al desmontar componente
   });
 </script>
 
 <section class='fixed text-sm flex flex-col p-2 m-2 mt-12 bg-gray-200 rounded-md shadow-md opacity-75 hover:opacity-100 appearance-none z-[9999] w-[360px]'>
   <div class="flex justify-between items-center mb-4">
     <h5 class="my-0 py-0"><strong>Hypar</strong></h5>
-    <button 
+    <!-- <button 
       class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
       onclick={togglePlay}
     >
       {isPlaying ? 'Pause' : 'Play'}
-    </button>
+    </button> -->
   </div>
 
   <div class="mb-2">
@@ -94,30 +57,44 @@
       {configurations[currentIndex].hypar}
     </span>
   </div>
-  {#snippet valores(identif: string, config: any, min: number, max: number, label1: string, onChange: (event: Event) => void)}
+  <!-- {#snippet valores(identif: string, config: any, min: number, max: number, label1: string, onChange: (event: Event) => void)} -->
     <div class='flex flex-row justify-between items-center'>
-      <label for='{identif}' class="w-[100px]">{label1}&nbsp;</label>
+      <!-- <label for='{identif}' class="w-[100px]">{label1}&nbsp;</label>
       <input
         id='{identif}'
         type='range'
-        value={config}
+        bind:value={config}
         min={min}
         max={max}
         oninput={onChange}
         class='w-full h-2 mx-3 bg-gray-500 rounded-lg appearance-none cursor-pointer dark:bg-gray-700'
       />
-      <label for='{identif}' class='w-8 text-right'>{config.toFixed(1)}</label>
+      <label for='{identif}' class='w-8 text-right'>{config.toFixed(1)}</label> -->
+      <label for='rango-mantos' class="w-[100px]">Mantos&nbsp;</label>
+      <input
+        id='rango-mantos'
+        type='range'
+        bind:value={mantos.target}
+        min=3
+        max=10
+        oninput={(e) => mantos.target = +(e.target as HTMLInputElement).value}
+        class='w-full h-2 mx-3 bg-gray-500 rounded-lg appearance-none cursor-pointer dark:bg-gray-700'
+      />
+      <label for='rango-mantos' class='w-8 text-right'>{mantos.target.toFixed(1)}</label>
     </div>
-  {/snippet}
-  {@render valores('rango-mantos', configs.mantos, 3, 10, 'Mantos', (e) => animatedValues.update(v => ({ ...v, mantos: +(e.target as HTMLInputElement).value })))}
-  {@render valores('rango-vertexX', configs.vertexX, 3, 50, 'Vértice X', (e) => animatedValues.update(v => ({ ...v, vertexX: +(e.target as HTMLInputElement).value })))}
-  {@render valores('rango-vertexY', configs.vertexY, 3, 50, 'Vértice Y', (e) => animatedValues.update(v => ({ ...v, vertexY: +(e.target as HTMLInputElement).value })))}
-  {@render valores('rango-vertexZ', configs.vertexZ, 3, 50, 'Vértice Z', (e) => animatedValues.update(v => ({ ...v, vertexZ: +(e.target as HTMLInputElement).value })))}
-  {@render valores('segments-range', configs.segments, 4, 300, 'Segmentos', (e) => configs.segments = +(e.target as HTMLInputElement).value)}
+  <!-- {/snippet}
+  {@render valores('rango-mantos', mantos.target, 3, 10, 'Mantos', (e) => mantos.target = +(e.target as HTMLInputElement).value)}
+  {@render valores('rango-vertexX', vertexX.target, 3, 50, 'Vértice X', (e) => vertexX.target = +(e.target as HTMLInputElement).value)}
+  {@render valores('rango-vertexY', vertexY.target, 3, 50, 'Vértice Y', (e) => vertexY.target = +(e.target as HTMLInputElement).value)}
+  {@render valores('rango-vertexZ', vertexZ.target, 3, 50, 'Vértice Z', (e) => vertexZ.target = +(e.target as HTMLInputElement).value)}
+  {@render valores('segments-range', segments, 4, 300, 'Segmentos', (e) => segments = +(e.target as HTMLInputElement).value)} -->
 </section>
 
-<Canvas>
+<!-- <Canvas>
   <Scene {...configs} />
+</Canvas> -->
+<Canvas>
+  <Scene mantos={dmantos} vertexX={dvertexX} vertexY={dvertexY} vertexZ={dvertexZ} {segments} />
 </Canvas>
 
 <style lang="postcss">
