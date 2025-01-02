@@ -30,22 +30,7 @@
 </T.PerspectiveCamera>
 <T.AmbientLight position={[0, 2, 4]} intensity={Math.PI / 8} />
 <T.SpotLight position={[2, 0, 2]} intensity={Math.PI} />
-<T.Mesh position={[-vertexX, vertexZ, 0]} key="a">
-  <T.BoxGeometry args={[0.2, 0.2, 0.2]} />
-  <T.MeshBasicMaterial color="red" />
-</T.Mesh>
-<T.Mesh position={[0, -vertexZ, vertexY]} key="b">
-  <T.BoxGeometry args={[0.2, 0.2, 0.2]} />
-  <T.MeshBasicMaterial color="blue" />
-</T.Mesh>
-<T.Mesh position={[vertexX, vertexZ, 0]} key="c">
-  <T.BoxGeometry args={[0.2, 0.2, 0.2]} />
-  <T.MeshBasicMaterial color="green" />
-</T.Mesh>
-<T.Mesh position={[0, -vertexZ, -vertexY]} key="d">
-  <T.BoxGeometry args={[0.2, 0.2, 0.2]} />
-  <T.MeshBasicMaterial color="yellow" />
-</T.Mesh>
+
 {#snippet ruled(index:number, mantos:number, segments:number, vertexX:number, vertexY:number, vertexZ:number)}
   <Ruled {index} {mantos} {segments} {vertexX} {vertexY} {vertexZ} />
 {/snippet}
