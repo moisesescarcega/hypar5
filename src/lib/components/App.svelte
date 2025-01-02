@@ -109,10 +109,10 @@
       <label for='{identif}' class='w-8 text-right'>{config.toFixed(1)}</label>
     </div>
   {/snippet}
-  {@render valores('rango-mantos', configs.mantos, 3, 10, 'Mantos', (e) => configs.mantos = +(e.target as HTMLInputElement).value)}
-  {@render valores('rango-vertexX', configs.vertexX, 3, 50, 'Vértice X', (e) => configs.vertexX = +(e.target as HTMLInputElement).value)}
-  {@render valores('rango-vertexY', configs.vertexY, 3, 50, 'Vértice Y', (e) => configs.vertexY = +(e.target as HTMLInputElement).value)}
-  {@render valores('rango-vertexZ', configs.vertexZ, 3, 50, 'Vértice Z', (e) => configs.vertexZ = +(e.target as HTMLInputElement).value)}
+  {@render valores('rango-mantos', configs.mantos, 3, 10, 'Mantos', (e) => animatedValues.update(v => ({ ...v, mantos: +(e.target as HTMLInputElement).value })))}
+  {@render valores('rango-vertexX', configs.vertexX, 3, 50, 'Vértice X', (e) => animatedValues.update(v => ({ ...v, vertexX: +(e.target as HTMLInputElement).value })))}
+  {@render valores('rango-vertexY', configs.vertexY, 3, 50, 'Vértice Y', (e) => animatedValues.update(v => ({ ...v, vertexY: +(e.target as HTMLInputElement).value })))}
+  {@render valores('rango-vertexZ', configs.vertexZ, 3, 50, 'Vértice Z', (e) => animatedValues.update(v => ({ ...v, vertexZ: +(e.target as HTMLInputElement).value })))}
   {@render valores('segments-range', configs.segments, 4, 300, 'Segmentos', (e) => configs.segments = +(e.target as HTMLInputElement).value)}
 </section>
 
