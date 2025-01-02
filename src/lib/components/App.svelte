@@ -17,14 +17,14 @@
     vertexY: configurations[0].vertexY,
     vertexZ: configurations[0].vertexZ
   }, {
-    duration: 1000
+    duration: 150
   });
 
   let configs = $derived({
-    ...tweenedValues.current,
-    segments: 45
+    ...tweenedValues.current
   });
 
+  let segments = $state(60);
   let currentIndex = $state(0);
   let isPlaying = $state(false);
   let intervalId: number;
@@ -107,19 +107,17 @@
     <input
       id='rango-segmentos'
       type='range'
-      value={configs.segments}
+      bind:value={segments}
       min=4
       max=300
-      oninput={(e) => configs.segments = +(e.target as HTMLInputElement).value}
-      disabled={isPlaying}
       class='w-full h-2 mx-3 bg-gray-500 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 disabled:opacity-50'
     />
-    <label for='rango-segmentos' class='w-8 text-right'>{Math.round(configs.segments)}</label>
+    <label for='rango-segmentos' class='w-8 text-right'>{segments}</label>
   </div>
 </section>
 
 <Canvas>
-  <Scene {...configs} />
+  <Scene {...configs} segments={segments} />
 </Canvas>
 
 <style lang="postcss">
