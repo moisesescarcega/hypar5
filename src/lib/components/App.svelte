@@ -107,11 +107,25 @@
         disabled={isPlaying}
         class='w-full h-2 mx-3 bg-gray-500 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 disabled:opacity-50'
       />
-      <label for='{identif}' class='w-8 text-right'>{Math.round(config)}</label>
+      <label for='{identif}' class='w-8 text-right'>{config.toFixed(1)}</label>
     </div>
   {/snippet}
 
-  {@render valores('rango-mantos', configs.mantos, 3, 10, 'Shells', 'mantos')}
+  <div class='flex flex-row justify-between items-center'>
+    <label for='rango-mantos' class="w-[100px]">Shells&nbsp;</label>
+    <input
+      id='rango-mantos'
+      type='range'
+      value={configs.mantos}
+      min=3
+      max=10
+      oninput={(e) => updateValue('mantos', +(e.target as HTMLInputElement).value)}
+      disabled={isPlaying}
+      class='w-full h-2 mx-3 bg-gray-500 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 disabled:opacity-50'
+    />
+    <label for='rango-mantos' class='w-8 text-right'>{Math.round(configs.mantos)}</label>
+  </div>
+  
   {@render valores('rango-vertexX', configs.vertexX, 3, 50, 'X vertex', 'vertexX')}
   {@render valores('rango-vertexY', configs.vertexY, 3, 50, 'Y vertex', 'vertexY')}
   {@render valores('rango-vertexZ', configs.vertexZ, 3, 50, 'Z vertex', 'vertexZ')}
