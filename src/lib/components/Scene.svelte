@@ -8,7 +8,7 @@
   import { Environment, OrbitControls } from '@threlte/extras';
   import Ruled from './Ruled.svelte'; 
   import Nurbs from './Nurbs.svelte';
-  let { mantos, vertexX, vertexY, vertexZ, segments, showRuled } = $props();
+  let { mantos, vertexX, vertexY, vertexZ, clipV1, clipV2, segments, showRuled } = $props();
 
   onMount(() => {
     const {renderer} = useThrelte() as {renderer: WebGLRenderer};
@@ -51,20 +51,20 @@
 
 {#if showRuled}
 
-{#snippet ruled(index:number, mantos:number, segments:number, vertexX:number, vertexY:number, vertexZ:number)}
-  <Ruled {index} {mantos} {segments} {vertexX} {vertexY} {vertexZ} />
+{#snippet ruled(index:number, mantos:number, segments:number, vertexX:number, vertexY:number, vertexZ:number, clipV1:number, clipV2:number)}
+  <Ruled {index} {mantos} {segments} {vertexX} {vertexY} {vertexZ} {clipV1} {clipV2} />
 {/snippet}
 {#each {length: mantos}, i}
-  {@render ruled(i, mantos, segments, vertexX, vertexY, vertexZ)}
+  {@render ruled(i, mantos, segments, vertexX, vertexY, vertexZ, clipV1, clipV2)}
 {/each}
 
 {:else}
 
-{#snippet nurbs(index:number, mantos:number, vertexX:number, vertexY:number, vertexZ:number)}
-  <Nurbs {index} {mantos} {vertexX} {vertexY} {vertexZ} />
+{#snippet nurbs(index:number, mantos:number, vertexX:number, vertexY:number, vertexZ:number, clipV1:number, clipV2:number)}
+  <Nurbs {index} {mantos} {vertexX} {vertexY} {vertexZ} {clipV1} {clipV2} />
 {/snippet}
 {#each {length: mantos}, i}
-  {@render nurbs(i, mantos, vertexX, vertexY, vertexZ)}
+  {@render nurbs(i, mantos, vertexX, vertexY, vertexZ, clipV1, clipV2)}
 {/each}
 
 {/if}

@@ -3,10 +3,10 @@
   import { Vector3, BufferGeometry, Float32BufferAttribute, MathUtils } from 'three';
   import { calculateClipPlanes } from './ClipPlanes';
 
-  let {index, mantos, vertexX, vertexY, vertexZ, segments} = $props();
+  let {index, mantos, vertexX, vertexY, vertexZ, clipV1, clipV2, segments} = $props();
 
   let rotacion = $derived(360 / mantos);
-  let clipPlane = $derived(calculateClipPlanes({mantos, index, rotacion}));
+  let clipPlane = $derived(calculateClipPlanes({mantos, clipV1, clipV2, index, rotacion}));
   let vertices = $derived([
     new Vector3(0, -vertexZ, -vertexY),
     new Vector3(vertexX, vertexZ, 0),

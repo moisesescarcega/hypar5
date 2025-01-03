@@ -5,10 +5,10 @@
     import { NURBSSurface } from "three/examples/jsm/Addons.js";
     import { calculateClipPlanes } from "./ClipPlanes";
 
-    let { index, mantos, vertexX, vertexY, vertexZ } = $props();
+    let { index, mantos, vertexX, vertexY, vertexZ, clipV1, clipV2 } = $props();
 
     let rotacion = $derived(360 / mantos);
-    let clipPlane = $derived(calculateClipPlanes({ mantos, index, rotacion }));
+    let clipPlane = $derived(calculateClipPlanes({ mantos, clipV1, clipV2, index, rotacion }));
     const degree1 = 1;
     const degree2 = 1;
     let controlPoints = $derived([

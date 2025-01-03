@@ -6,17 +6,19 @@
   import Scene from './Scene.svelte';
 
   const configurations = [
-    { hypar: 'Pabellón Oslo', mantos: 3, vertexX: 22, vertexY: 14, vertexZ: 26 },
-    { hypar: 'Casino de la Selva', mantos: 5, vertexX: 30, vertexY: 10, vertexZ: 27 },
-    { hypar: 'San Antonio de las Huertas', mantos: 4, vertexX: 30, vertexY: 14, vertexZ: 43 },
-    { hypar: 'Manantiales', mantos: 8, vertexX: 37, vertexY: 9, vertexZ: 26 }
+    { hypar: 'Pabellón Oslo', mantos: 3, vertexX: 22, vertexY: 14, vertexZ: 26, clipV1: 16, clipV2: 5 },
+    { hypar: 'Casino de la Selva', mantos: 5, vertexX: 30, vertexY: 10, vertexZ: 27, clipV1: 25, clipV2: 7.5 },
+    { hypar: 'San Antonio de las Huertas', mantos: 4, vertexX: 30, vertexY: 14, vertexZ: 43, clipV1: 0, clipV2: 9 },
+    { hypar: 'Manantiales', mantos: 8, vertexX: 37, vertexY: 9, vertexZ: 26, clipV1: 19, clipV2: 12 }
   ];
 
   const tweenedValues = new Tween({
     mantos: configurations[0].mantos,
     vertexX: configurations[0].vertexX,
     vertexY: configurations[0].vertexY,
-    vertexZ: configurations[0].vertexZ
+    vertexZ: configurations[0].vertexZ,
+    clipV1: configurations[0].clipV1,
+    clipV2: configurations[0].clipV2
   }, {
     duration: 240,
     easing: cubicOut
@@ -40,7 +42,9 @@
       mantos: nextConfig.mantos,
       vertexX: nextConfig.vertexX,
       vertexY: nextConfig.vertexY,
-      vertexZ: nextConfig.vertexZ
+      vertexZ: nextConfig.vertexZ,
+      clipV1: nextConfig.clipV1,
+      clipV2: nextConfig.clipV2
     });
   }
 
@@ -103,6 +107,7 @@
         value={config}
         min={min}
         max={max}
+        step=0.1
         oninput={(e) => updateValue(key, +(e.target as HTMLInputElement).value)}
         disabled={isPlaying}
         class='w-full h-2 mx-3 bg-gray-500 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 disabled:opacity-50'
@@ -129,6 +134,8 @@
   {@render valores('rango-vertexX', configs.vertexX, 3, 50, 'X vertex', 'vertexX')}
   {@render valores('rango-vertexY', configs.vertexY, 3, 50, 'Y vertex', 'vertexY')}
   {@render valores('rango-vertexZ', configs.vertexZ, 3, 50, 'Z vertex', 'vertexZ')}
+  {@render valores('rango-clipV1', configs.clipV1, 0, 50, 'Clip V1', 'clipV1')}
+  {@render valores('rango-clipV2', configs.clipV2, 0, 50, 'Clip V2', 'clipV2')}
 
   {#if showRuled}
   <div class='flex flex-row justify-between items-center'>
