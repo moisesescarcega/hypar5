@@ -11,6 +11,16 @@
     { hypar: 'San Antonio de las Huertas', mantos: 4, vertexX: 30, vertexY: 14, vertexZ: 43, clipV1: 0, clipV2: 9 },
     { hypar: 'Manantiales', mantos: 8, vertexX: 37, vertexY: 9, vertexZ: 26, clipV1: 19, clipV2: 12 }
   ];
+  
+  let segments = $state(60);
+  let currentIndex = $state(0);
+  let isPlaying = $state(false);
+  let showRuled = $state(true);
+  let intervalId: number;
+  let tweenCofigs = {
+    duration: () => isPlaying ? 600 : 0,
+    easing: cubicOut
+  };
 
   const tweenedValues = new Tween({
     mantos: configurations[0].mantos,
@@ -19,20 +29,11 @@
     vertexZ: configurations[0].vertexZ,
     clipV1: configurations[0].clipV1,
     clipV2: configurations[0].clipV2
-  }, {
-    duration: 240,
-    easing: cubicOut
-  });
+  }, tweenCofigs);
 
   let configs = $derived({
     ...tweenedValues.current
   });
-
-  let segments = $state(60);
-  let currentIndex = $state(0);
-  let isPlaying = $state(false);
-  let showRuled = $state(true);
-  let intervalId: number;
 
   async function animateToNext() {
     currentIndex = (currentIndex + 1) % configurations.length;
@@ -75,7 +76,7 @@
   });
 </script>
 
-<section class='fixed text-sm flex flex-col p-2 m-2 mt-12 bg-gray-200 rounded-md shadow-md opacity-75 hover:opacity-100 appearance-none z-[9999] w-[360px]'>
+<section class='fixed text-sm flex flex-col p-2 m-2 mt-2 bg-gray-200 rounded-md shadow-md opacity-75 hover:opacity-100 appearance-none z-[9999] w-[360px]'>
   <h5 class="my-0 py-0"><strong>Hypar geometry of concrete shells</strong></h5>
   <div class="flex flex-row w-auto space-x-2 my-2">
     <button 
@@ -100,7 +101,7 @@
 
   {#snippet valores(identif: string, config: any, min: number, max: number, label1: string, key: string)}
     <div class='flex flex-row justify-between items-center'>
-      <label for='{identif}' class="w-[100px]">{label1}&nbsp;</label>
+      <label for='{identif}' class="w-[150px]">{label1}&nbsp;</label>
       <input
         id='{identif}'
         type='range'
@@ -117,7 +118,7 @@
   {/snippet}
 
   <div class='flex flex-row justify-between items-center'>
-    <label for='rango-mantos' class="w-[100px]">Shells&nbsp;</label>
+    <label for='rango-mantos' class="w-[150px]">Shells&nbsp;</label>
     <input
       id='rango-mantos'
       type='range'
@@ -134,12 +135,14 @@
   {@render valores('rango-vertexX', configs.vertexX, 3, 50, 'X vertex', 'vertexX')}
   {@render valores('rango-vertexY', configs.vertexY, 3, 50, 'Y vertex', 'vertexY')}
   {@render valores('rango-vertexZ', configs.vertexZ, 3, 50, 'Z vertex', 'vertexZ')}
-  {@render valores('rango-clipV1', configs.clipV1, 0, 50, 'Clip V1', 'clipV1')}
-  {@render valores('rango-clipV2', configs.clipV2, 0, 50, 'Clip V2', 'clipV2')}
+  {#if !isPlaying}
+  {@render valores('rango-clipV1', configs.clipV1, 0, 50, 'Angle clip', 'clipV1')}
+  {@render valores('rango-clipV2', configs.clipV2, 0, 50, 'Distance clip', 'clipV2')}
+  {/if}
 
   {#if showRuled}
   <div class='flex flex-row justify-between items-center'>
-    <label for='rango-segmentos' class="w-[100px]">Segmentos&nbsp;</label>
+    <label for='rango-segmentos' class="w-[150px]">Segmentos&nbsp;</label>
     <input
       id='rango-segmentos'
       type='range'
