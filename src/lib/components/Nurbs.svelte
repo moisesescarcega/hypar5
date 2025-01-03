@@ -1,10 +1,14 @@
 <script lang="ts">
     import { T } from "@threlte/core";
-    import { Vector3, DoubleSide } from "three";
+    import { Vector3, DoubleSide, MathUtils } from "three";
     import { ParametricGeometry } from "three/examples/jsm/Addons.js";
     import { NURBSSurface } from "three/examples/jsm/Addons.js";
-    let { vertexX, vertexY, vertexZ } = $props();
+    import { calculateClipPlanes } from "./ClipPlanes";
 
+    let { index, mantos, vertexX, vertexY, vertexZ } = $props();
+
+    let rotacion = $derived(360 / mantos);
+    let clipPlane = $derived(calculateClipPlanes({ mantos, index, rotacion }));
     const degree1 = 1;
     const degree2 = 1;
     let controlPoints = $derived([
@@ -31,6 +35,6 @@
     });
 </script>
 
-<T.Mesh geometry={nurbsGeometry} >
-    <T.MeshStandardMaterial color="blue" side={DoubleSide} />
+<T.Mesh geometry={nurbsGeometry} rotation.y = {MathUtils.degToRad(rotacion * index)} >
+    <T.MeshStandardMaterial color="#193d6b" side={DoubleSide} clippingPlanes={clipPlane} />
 </T.Mesh>

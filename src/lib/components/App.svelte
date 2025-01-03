@@ -29,6 +29,7 @@
   let segments = $state(60);
   let currentIndex = $state(0);
   let isPlaying = $state(false);
+  let showRuled = $state(true);
   let intervalId: number;
 
   async function animateToNext() {
@@ -52,6 +53,10 @@
     }
   }
 
+  function toogleRuled() {
+    showRuled = !showRuled;
+  }
+
   function updateValue(key: string, value: number) {
     if (!isPlaying) {
       tweenedValues.set({
@@ -67,18 +72,26 @@
 </script>
 
 <section class='fixed text-sm flex flex-col p-2 m-2 mt-12 bg-gray-200 rounded-md shadow-md opacity-75 hover:opacity-100 appearance-none z-[9999] w-[360px]'>
-  <div class="flex justify-between items-center mb-2">
-    <h5 class="my-0 py-0"><strong>Hypar</strong></h5>
+  <h5 class="my-0 py-0"><strong>Hypar geometry of concrete shells</strong></h5>
+  <div class="flex flex-row w-auto space-x-2 my-2">
     <button 
-      class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+      class="rounded-md border border-slate-300 py-1 px-2 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:border-slate-800 active:border-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none w-full" 
+      type="button"
       onclick={togglePlay}
     >
-      {isPlaying ? 'Stop' : 'Play'}
+    {isPlaying ? 'Modify' : 'Play'}
+    </button>
+    <button 
+      class="rounded-md border border-slate-300 py-1 px-2 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:border-slate-800 active:border-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none w-full" 
+      type="button"
+      onclick={toogleRuled}
+    >
+    {showRuled ? 'Solid Surface' : 'Ruled Surface'}
     </button>
   </div>
   
   {#if isPlaying}
-    <div class="mb-2 text-sm font-medium">{configurations[currentIndex].hypar}</div>
+    <div class="mb-2 text-sm font-bold">{configurations[currentIndex].hypar}</div>
   {/if}
 
   {#snippet valores(identif: string, config: any, min: number, max: number, label1: string, key: string)}
@@ -98,12 +111,12 @@
     </div>
   {/snippet}
 
-  {@render valores('rango-mantos', configs.mantos, 3, 10, 'Mantos', 'mantos')}
-  {@render valores('rango-vertexX', configs.vertexX, 3, 50, 'Vértice X', 'vertexX')}
-  {@render valores('rango-vertexY', configs.vertexY, 3, 50, 'Vértice Y', 'vertexY')}
-  {@render valores('rango-vertexZ', configs.vertexZ, 3, 50, 'Vértice Z', 'vertexZ')}
-  <!-- {@render valores('segments-range', configs.segments, 4, 300, 'Segmentos', 'segments')} -->
+  {@render valores('rango-mantos', configs.mantos, 3, 10, 'Shells', 'mantos')}
+  {@render valores('rango-vertexX', configs.vertexX, 3, 50, 'X vertex', 'vertexX')}
+  {@render valores('rango-vertexY', configs.vertexY, 3, 50, 'Y vertex', 'vertexY')}
+  {@render valores('rango-vertexZ', configs.vertexZ, 3, 50, 'Z vertex', 'vertexZ')}
 
+  {#if showRuled}
   <div class='flex flex-row justify-between items-center'>
     <label for='rango-segmentos' class="w-[100px]">Segmentos&nbsp;</label>
     <input
@@ -116,10 +129,11 @@
     />
     <label for='rango-segmentos' class='w-8 text-right'>{segments}</label>
   </div>
+  {/if}
 </section>
 
 <Canvas>
-  <Scene {...configs} {segments} />
+  <Scene {...configs} {segments} {showRuled} />
 </Canvas>
 
 <style lang="postcss">
