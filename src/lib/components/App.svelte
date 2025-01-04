@@ -1,45 +1,73 @@
 <script lang="ts">
   import { Canvas } from '@threlte/core';
   import { Tween } from 'svelte/motion';
-  import { onDestroy } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
   import { cubicOut } from 'svelte/easing';
   import Scene from './Scene.svelte';
 
-  const configurations = [
-    { hypar: 'Pabellón Oslo', mantos: 3, vertexX: 22, vertexY: 14, vertexZ: 26, clipV1: 16, clipV2: 5 },
-    { hypar: 'Casino de la Selva', mantos: 5, vertexX: 30, vertexY: 10, vertexZ: 27, clipV1: 25, clipV2: 7.5 },
-    { hypar: 'San Antonio de las Huertas', mantos: 4, vertexX: 30, vertexY: 14, vertexZ: 43, clipV1: 0, clipV2: 9 },
-    { hypar: 'Manantiales', mantos: 8, vertexX: 37, vertexY: 9, vertexZ: 26, clipV1: 19, clipV2: 12 }
-  ];
-  
+  type HyparConfig = {
+    hypar: string;
+    mantos: number;
+    vertexX: number;
+    vertexY: number;
+    vertexZ: number;
+    clipV1: number;
+    clipV2: number;
+  }
+
+  let configurations = $state<HyparConfig[]>([]);
   let segments = $state(60);
   let currentIndex = $state(0);
   let isPlaying = $state(false);
   let showRuled = $state(true);
-  let intervalId: number;
-  let tweenCofigs = {
-    duration: () => isPlaying ? 600 : 0,
+  let intervalId: number | undefined = undefined;
+  
+  let tweenConfigs = {
+    duration: () => isPlaying ? 10 : 600,
     easing: cubicOut
   };
 
   const tweenedValues = new Tween({
-    mantos: configurations[0].mantos,
-    vertexX: configurations[0].vertexX,
-    vertexY: configurations[0].vertexY,
-    vertexZ: configurations[0].vertexZ,
-    clipV1: configurations[0].clipV1,
-    clipV2: configurations[0].clipV2
-  }, tweenCofigs);
+    mantos: 3,
+    vertexX: 22,
+    vertexY: 14,
+    vertexZ: 26,
+    clipV1: 16,
+    clipV2: 5
+  }, tweenConfigs);
 
   let configs = $derived({
     ...tweenedValues.current
   });
 
-  async function animateToNext() {
+  onMount(async () => {
+    try {
+      const response = await fetch('/hypar-configurations.json');
+      const data = await response.json();
+      configurations = data.configurations;
+      
+      if (configurations.length > 0) {
+        const initial = configurations[0];
+        tweenedValues.set({
+          mantos: initial.mantos,
+          vertexX: initial.vertexX,
+          vertexY: initial.vertexY,
+          vertexZ: initial.vertexZ,
+          clipV1: initial.clipV1,
+          clipV2: initial.clipV2
+        });
+      }
+    } catch (error) {
+      console.error('Error loading configurations:', error);
+    }
+  });
+
+  function animateToNext() {
+    if (configurations.length === 0) return;
     currentIndex = (currentIndex + 1) % configurations.length;
     const nextConfig = configurations[currentIndex];
     
-    await tweenedValues.set({
+    tweenedValues.set({
       mantos: nextConfig.mantos,
       vertexX: nextConfig.vertexX,
       vertexY: nextConfig.vertexY,
@@ -51,10 +79,11 @@
 
   function togglePlay() {
     isPlaying = !isPlaying;
-    if (isPlaying) {
+    if (isPlaying && !intervalId) {
       intervalId = setInterval(animateToNext, 5000);
-    } else {
+    } else if (!isPlaying && intervalId) {
       clearInterval(intervalId);
+      intervalId = undefined;
     }
   }
 
@@ -72,7 +101,10 @@
   }
 
   onDestroy(() => {
-    if (intervalId) clearInterval(intervalId);
+    if (intervalId) {
+      clearInterval(intervalId);
+      intervalId = undefined;
+    }
   });
 </script>
 

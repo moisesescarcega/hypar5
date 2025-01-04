@@ -13,6 +13,8 @@
   onMount(() => {
     const {renderer} = useThrelte() as {renderer: WebGLRenderer};
     renderer.localClippingEnabled = true;
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
   });
 
 </script>
