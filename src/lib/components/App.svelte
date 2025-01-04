@@ -23,7 +23,7 @@
   let intervalId: number | undefined = undefined;
   
   let tweenConfigs = {
-    duration: () => isPlaying ? 10 : 600,
+    duration: () => isPlaying ? 600 : 0,
     easing: cubicOut
   };
 
