@@ -174,7 +174,7 @@
 
   {#if showRuled}
   <div class='flex flex-row justify-between items-center'>
-    <label for='rango-segmentos' class="w-[150px]">Segmentos&nbsp;</label>
+    <label for='rango-segmentos' class="w-[150px]">Segments&nbsp;</label>
     <input
       id='rango-segmentos'
       type='range'
