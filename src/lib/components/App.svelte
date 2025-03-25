@@ -24,7 +24,7 @@
   
   let tweenConfigs = {
     duration: () => isPlaying ? 600 : 0,
-    easing: cubicOut
+    easing: undefined
   };
 
   const tweenedValues = new Tween({
