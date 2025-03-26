@@ -5,7 +5,7 @@
     import { NURBSSurface } from "three/examples/jsm/Addons.js";
     import { calculateClipPlanes } from "./ClipPlanes";
 
-    let { index, mantos, vertexX, vertexY, vertexZ, clipV1, clipV2 } = $props();
+    let { index, mantos, vertexX, vertexY, vertexZ, offset, clipV1, clipV2 } = $props();
 
     let rotacion = $derived(360 / mantos);
     let clipPlane = $derived(calculateClipPlanes({ mantos, clipV1, clipV2, index, rotacion }));
@@ -33,8 +33,28 @@
         }
         nurbsGeometry = new ParametricGeometry(getSurfacePoints, 33, 33);
     });
+
+    function calculatePosition(index: number) {
+        const angle = (index / mantos) * Math.PI * 2; // Ángulo en radianes
+        return {
+            x: Math.cos(angle) * offset, // Coordenada x
+            y: Math.sin(angle) * offset  // Coordenada y
+        };
+    }
+
+    function colorIndex(index: number) {
+        if (index === 0) {
+            return "#193d6b";
+        } else {
+            return "#3d6b19";
+        }
+    }
 </script>
 
-<T.Mesh geometry={nurbsGeometry} rotation.y = {MathUtils.degToRad(rotacion * index)} >
-    <T.MeshStandardMaterial color="#193d6b" side={DoubleSide} clippingPlanes={clipPlane} />
+<T.Mesh 
+    geometry={nurbsGeometry} 
+    rotation.y = {MathUtils.degToRad(rotacion * index)} 
+    position={[calculatePosition(index).y, 0, calculatePosition(index).x]} 
+>
+    <T.MeshStandardMaterial color={colorIndex(index)} side={DoubleSide} clippingPlanes={clipPlane} />
 </T.Mesh>

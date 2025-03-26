@@ -7,7 +7,18 @@
         "vertexY": 14, 
         "vertexZ": 26, 
         "clipV1": 16, 
-        "clipV2": 5 
+        "clipV2": 5,
+        "offset": 0 
+      },
+      { 
+        "hypar": "Jacaranda", 
+        "mantos": 3, 
+        "vertexX": 22, 
+        "vertexY": 17, 
+        "vertexZ": 19, 
+        "clipV1": 16, 
+        "clipV2": 7,
+        "offset": 1.5 
       },
       { 
         "hypar": "Casino de la Selva", 
@@ -16,7 +27,8 @@
         "vertexY": 10, 
         "vertexZ": 27, 
         "clipV1": 25, 
-        "clipV2": 7.5 
+        "clipV2": 7.5,
+        "offset": 0 
       },
       { 
         "hypar": "San Antonio de las Huertas", 
@@ -25,7 +37,8 @@
         "vertexY": 14, 
         "vertexZ": 43, 
         "clipV1": 0, 
-        "clipV2": 9 
+        "clipV2": 9,
+        "offset": 0 
       },
       { 
         "hypar": "Manantiales", 
@@ -34,7 +47,8 @@
         "vertexY": 9, 
         "vertexZ": 26, 
         "clipV1": 19, 
-        "clipV2": 12 
+        "clipV2": 12,
+        "offset": 0 
       }
     ]
   }

@@ -3,7 +3,7 @@
   import { Vector3, BufferGeometry, Float32BufferAttribute, MathUtils } from 'three';
   import { calculateClipPlanes } from './ClipPlanes';
 
-  let {index, mantos, vertexX, vertexY, vertexZ, clipV1, clipV2, segments} = $props();
+  let {index, mantos, vertexX, vertexY, vertexZ, offset, clipV1, clipV2, segments} = $props();
 
   let rotacion = $derived(360 / mantos);
   let clipPlane = $derived(calculateClipPlanes({mantos, clipV1, clipV2, index, rotacion}));
@@ -21,6 +21,14 @@
       pointA.y * (1 - t) + pointB.y * t,
       pointA.z * (1 - t) + pointB.z * t
     );
+  }
+
+  function calculatePosition(index: number) {
+    const angle = (index / mantos) * Math.PI * 2; // Ángulo en radianes
+    return {
+        x: Math.cos(angle) * offset, // Coordenada x
+        y: Math.sin(angle) * offset  // Coordenada y
+    };
   }
 
   // Mantenemos effect, ya que setAttribute es un efecto secundario
@@ -50,7 +58,11 @@
 
 </script>
 
-<T.LineSegments rotation.y={MathUtils.degToRad(rotacion * index)} >
+<T.LineSegments 
+  rotation.y={MathUtils.degToRad(rotacion * index)} 
+  position.x={calculatePosition(index).x} 
+  position.y={calculatePosition(index).y} 
+>
   <T.BufferGeometry bind:ref={geometryLine} />
   <T.LineBasicMaterial color="#193d6b" linewidth={1} clippingPlanes={clipPlane} />
 </T.LineSegments>

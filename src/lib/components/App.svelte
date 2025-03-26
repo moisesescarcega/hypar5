@@ -2,7 +2,6 @@
   import { Canvas } from '@threlte/core';
   import { Tween } from 'svelte/motion';
   import { onDestroy, onMount } from 'svelte';
-  import { cubicOut } from 'svelte/easing';
   import Scene from './Scene.svelte';
 
   type HyparConfig = {
@@ -13,6 +12,7 @@
     vertexZ: number;
     clipV1: number;
     clipV2: number;
+    offset: number;
   }
 
   let configurations = $state<HyparConfig[]>([]);
@@ -33,7 +33,8 @@
     vertexY: 14,
     vertexZ: 26,
     clipV1: 16,
-    clipV2: 5
+    clipV2: 5,
+    offset: 0
   }, tweenConfigs);
 
   let configs = $derived({
@@ -54,8 +55,10 @@
           vertexY: initial.vertexY,
           vertexZ: initial.vertexZ,
           clipV1: initial.clipV1,
-          clipV2: initial.clipV2
+          clipV2: initial.clipV2,
+          offset: initial.offset
         });
+        togglePlay();
       }
     } catch (error) {
       console.error('Error loading configurations:', error);
@@ -73,7 +76,8 @@
       vertexY: nextConfig.vertexY,
       vertexZ: nextConfig.vertexZ,
       clipV1: nextConfig.clipV1,
-      clipV2: nextConfig.clipV2
+      clipV2: nextConfig.clipV2,
+      offset: nextConfig.offset
     });
   }
 
@@ -167,6 +171,7 @@
   {@render valores('rango-vertexX', configs.vertexX, 3, 50, 'X vertex', 'vertexX')}
   {@render valores('rango-vertexY', configs.vertexY, 3, 50, 'Y vertex', 'vertexY')}
   {@render valores('rango-vertexZ', configs.vertexZ, 3, 50, 'Z vertex', 'vertexZ')}
+  {@render valores('rango-offset', configs.offset, -5, 5, 'offset', 'offset')}
   {#if !isPlaying}
   {@render valores('rango-clipV1', configs.clipV1, 0, 50, 'Angle clip', 'clipV1')}
   {@render valores('rango-clipV2', configs.clipV2, 0, 50, 'Distance clip', 'clipV2')}

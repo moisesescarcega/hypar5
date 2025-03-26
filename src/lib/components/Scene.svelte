@@ -8,7 +8,7 @@
   import { Environment, OrbitControls } from '@threlte/extras';
   import Ruled from './Ruled.svelte'; 
   import Nurbs from './Nurbs.svelte';
-  let { mantos, vertexX, vertexY, vertexZ, clipV1, clipV2, segments, showRuled } = $props();
+  let { mantos, vertexX, vertexY, vertexZ, offset, clipV1, clipV2, segments, showRuled } = $props();
 
   onMount(() => {
     const {renderer} = useThrelte() as {renderer: WebGLRenderer};
@@ -16,6 +16,14 @@
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
+
+  // function calculatePosition(index: number) {
+  //   const angle = (index / mantos) * Math.PI * 2; // Ángulo en radianes
+  //   return {
+  //       x: Math.cos(angle) * offset, // Coordenada x
+  //       y: Math.sin(angle) * offset  // Coordenada y
+  //   };
+  // }
 
 </script>
 
@@ -53,20 +61,20 @@
 
 {#if showRuled}
 
-{#snippet ruled(index:number, mantos:number, segments:number, vertexX:number, vertexY:number, vertexZ:number, clipV1:number, clipV2:number)}
-  <Ruled {index} {mantos} {segments} {vertexX} {vertexY} {vertexZ} {clipV1} {clipV2} />
+{#snippet ruled(index:number, mantos:number, segments:number, vertexX:number, vertexY:number, vertexZ:number, clipV1:number, clipV2:number, offset:number)}
+  <Ruled {index} {mantos} {segments} {vertexX} {vertexY} {vertexZ} {clipV1} {clipV2} {offset} />
 {/snippet}
 {#each {length: mantos}, i}
-  {@render ruled(i, mantos, segments, vertexX, vertexY, vertexZ, clipV1, clipV2)}
+  {@render ruled(i, mantos, segments, vertexX, vertexY, vertexZ, clipV1, clipV2, offset)}
 {/each}
 
 {:else}
 
-{#snippet nurbs(index:number, mantos:number, vertexX:number, vertexY:number, vertexZ:number, clipV1:number, clipV2:number)}
-  <Nurbs {index} {mantos} {vertexX} {vertexY} {vertexZ} {clipV1} {clipV2} />
+{#snippet nurbs(index:number, mantos:number, vertexX:number, vertexY:number, vertexZ:number, clipV1:number, clipV2:number, offset:number)}
+  <Nurbs {index} {mantos} {vertexX} {vertexY} {vertexZ} {clipV1} {clipV2} {offset} />
 {/snippet}
 {#each {length: mantos}, i}
-  {@render nurbs(i, mantos, vertexX, vertexY, vertexZ, clipV1, clipV2)}
+  {@render nurbs(i, mantos, vertexX, vertexY, vertexZ, clipV1, clipV2, offset)}
 {/each}
 
 {/if}
