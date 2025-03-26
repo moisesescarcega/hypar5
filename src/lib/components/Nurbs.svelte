@@ -31,26 +31,16 @@
         function getSurfacePoints (u: number, v: number, target: Vector3) {
             return nurbsSurface.getPoint(u, v, target)
         }
-        nurbsGeometry = new ParametricGeometry(getSurfacePoints, 33, 33);
+        nurbsGeometry = new ParametricGeometry(getSurfacePoints, 60, 60);
     });
 
     function calculatePosition(index: number) {
-        const angle = MathUtils.degToRad(rotacion * (index * 2));
+        const angle = MathUtils.degToRad(rotacion * (index * (mantos - 1)));
         const x = Math.cos(angle) * offset;
         const y = Math.sin(angle) * offset;
         return { x, y };
     }
 
-    // function colorIndex(index: number) {
-    //     switch (index) {
-    //         case 0:
-    //             return "#193d6b";
-    //         case 1:
-    //             return "#6b1919";
-    //         default:
-    //             return "#3d6b19";
-    //     }
-    // }
 </script>
 <T.Group position={[calculatePosition(index).x, 0, calculatePosition(index).y]} >
     <T.Mesh 

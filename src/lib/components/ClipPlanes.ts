@@ -18,6 +18,7 @@ export function calculateClipPlanes(props: ClipPlanesProps): Plane[] {
  const rotacionPlanoInclinado = MathUtils.degToRad(90 + (props.rotacion * props.index));
 
  return [
+   new Plane(new Vector3(0, 0, -1).applyAxisAngle(axisZ, MathUtils.degToRad(90)), 6),
    new Plane(new Vector3(0, 0, 1).applyAxisAngle(axisY, rotacionPlanoCorte), 0),
    new Plane(new Vector3(0, 0, -1).applyAxisAngle(axisY, rotacionPlanoCorte + MathUtils.degToRad(-anguloPorManto)), 0),
    new Plane(new Vector3(0, 0, -1).applyAxisAngle(axisZ, MathUtils.degToRad(-props.clipV1)).applyAxisAngle(axisY, rotacionPlanoInclinado), props.clipV2)

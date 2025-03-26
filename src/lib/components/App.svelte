@@ -159,7 +159,7 @@
       id='rango-mantos'
       type='range'
       value={configs.mantos}
-      min=3
+      min=2
       max=10
       oninput={(e) => updateValue('mantos', +(e.target as HTMLInputElement).value)}
       disabled={isPlaying}

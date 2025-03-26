@@ -24,10 +24,10 @@
   }
 
   function calculatePosition(index: number) {
-      const angle = MathUtils.degToRad(rotacion * (index * 2));
-      const x = Math.cos(angle) * offset;
-      const y = Math.sin(angle) * offset;
-      return { x, y };
+    const angle = MathUtils.degToRad(rotacion * (index * (mantos -1)));
+    const x = Math.cos(angle) * offset;
+    const y = Math.sin(angle) * offset;
+    return { x, y };
   }
 
   // Mantenemos effect, ya que setAttribute es un efecto secundario
