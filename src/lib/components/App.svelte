@@ -171,7 +171,7 @@
   {@render valores('rango-vertexX', configs.vertexX, 3, 50, 'X vertex', 'vertexX')}
   {@render valores('rango-vertexY', configs.vertexY, 3, 50, 'Y vertex', 'vertexY')}
   {@render valores('rango-vertexZ', configs.vertexZ, 3, 50, 'Z vertex', 'vertexZ')}
-  {@render valores('rango-offset', configs.offset, -5, 5, 'offset', 'offset')}
+  {@render valores('rango-offset', configs.offset, -5, 5, 'Offset', 'offset')}
   {#if !isPlaying}
   {@render valores('rango-clipV1', configs.clipV1, 0, 50, 'Angle clip', 'clipV1')}
   {@render valores('rango-clipV2', configs.clipV2, 0, 50, 'Distance clip', 'clipV2')}
