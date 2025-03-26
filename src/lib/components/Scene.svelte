@@ -48,12 +48,17 @@
   fov={50}
 >
   <OrbitControls
+    enableZoom={true}
+    enableDamping
+    target.y={1.5}
+  />
+  <!-- <OrbitControls
     autoRotate
     enableZoom={true}
     enableDamping
     autoRotateSpeed={0.5}
     target.y={1.5}
-  />
+  /> -->
 </T.PerspectiveCamera>
 <T.AmbientLight position={[0, 0, 0]} intensity={Math.PI / 8} />
 <!-- <T.SpotLight position={[6, 3, 4]} intensity={Math.PI} /> -->

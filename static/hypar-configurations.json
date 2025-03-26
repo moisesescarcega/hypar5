@@ -1,16 +1,6 @@
 {
     "configurations": [
       { 
-        "hypar": "Pabellón Oslo", 
-        "mantos": 3, 
-        "vertexX": 22, 
-        "vertexY": 14, 
-        "vertexZ": 26, 
-        "clipV1": 16, 
-        "clipV2": 5,
-        "offset": 0 
-      },
-      { 
         "hypar": "Jacaranda", 
         "mantos": 3, 
         "vertexX": 22, 
@@ -19,6 +9,16 @@
         "clipV1": 16, 
         "clipV2": 7,
         "offset": 1.5 
+      },
+      { 
+        "hypar": "Pabellón Oslo", 
+        "mantos": 3, 
+        "vertexX": 22, 
+        "vertexY": 14, 
+        "vertexZ": 26, 
+        "clipV1": 16, 
+        "clipV2": 5,
+        "offset": 0 
       },
       { 
         "hypar": "Casino de la Selva", 

@@ -35,18 +35,23 @@
     });
 
     function calculatePosition(index: number) {
-        const angle = (index / mantos) * Math.PI * 2; // Ángulo en radianes
-        return {
-            x: Math.cos(angle) * offset, // Coordenada x
-            y: Math.sin(angle) * offset  // Coordenada y
-        };
+        // Convertir degrees a radianes antes del cálculo trigonométrico
+        const angle = MathUtils.degToRad(rotacion * index);
+        
+        const x = Math.cos(angle) * offset;
+        const y = Math.sin(angle) * offset;
+        console.log(x, y);
+        return { x, y };
     }
 
     function colorIndex(index: number) {
-        if (index === 0) {
-            return "#193d6b";
-        } else {
-            return "#3d6b19";
+        switch (index) {
+            case 0:
+                return "#193d6b";
+            case 1:
+                return "#6b1919";
+            default:
+                return "#3d6b19";
         }
     }
 </script>
@@ -54,7 +59,7 @@
 <T.Mesh 
     geometry={nurbsGeometry} 
     rotation.y = {MathUtils.degToRad(rotacion * index)} 
-    position={[calculatePosition(index).y, 0, calculatePosition(index).x]} 
+    position={[calculatePosition(index).x, 0, calculatePosition(index).y]} 
 >
     <T.MeshStandardMaterial color={colorIndex(index)} side={DoubleSide} clippingPlanes={clipPlane} />
 </T.Mesh>

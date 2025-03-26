@@ -24,12 +24,14 @@
   }
 
   function calculatePosition(index: number) {
-    const angle = (index / mantos) * Math.PI * 2; // Ángulo en radianes
-    return {
-        x: Math.cos(angle) * offset, // Coordenada x
-        y: Math.sin(angle) * offset  // Coordenada y
-    };
-  }
+        // Convertir degrees a radianes antes del cálculo trigonométrico
+        const angle = MathUtils.degToRad(rotacion * index);
+        
+        const x = Math.cos(angle) * offset;
+        const y = Math.sin(angle) * offset;
+        console.log(x, y);
+        return { x, y };
+    }
 
   // Mantenemos effect, ya que setAttribute es un efecto secundario
   $effect(() => {
@@ -61,7 +63,7 @@
 <T.LineSegments 
   rotation.y={MathUtils.degToRad(rotacion * index)} 
   position.x={calculatePosition(index).x} 
-  position.y={calculatePosition(index).y} 
+  position.z={calculatePosition(index).y} 
 >
   <T.BufferGeometry bind:ref={geometryLine} />
   <T.LineBasicMaterial color="#193d6b" linewidth={1} clippingPlanes={clipPlane} />
