@@ -1,19 +1,27 @@
 <script lang="ts">
+  import { page } from '$app/stores';
     let navItems = ['Intro', 'Visualization', 'About'];
     let activeItem = 'Visualization';
+    function routePage(item: string) {
+      if (item === 'Visualization') {
+        return '/';
+      } else {
+        return `/${item.toLowerCase()}`;
+      }
+    }
   </script>
   
   <header>
     <nav>
       <ul>
         {#each navItems as item}
-          <li>
-            <button 
+          <li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
+            <a class="button" href={routePage(item)}
               class:active={activeItem === item}
               on:click={() => activeItem = item}
             >
               {item}
-            </button>
+            </a>
           </li>
         {/each}
       </ul>
@@ -47,7 +55,7 @@
       justify-content: center;
     }
   
-    button {
+    .button {
       background: none;
       border: none;
       color: #2c3e50;
@@ -57,12 +65,12 @@
       transition: all 0.3s ease;
     }
   
-    button:hover {
+    .button:hover {
       color: #1a252f;
       transform: translateY(-2px);
     }
   
-    button.active {
+    .button.active {
       color: #1a252f;
       font-weight: bold;
       border-bottom: 1px solid #1a252f;

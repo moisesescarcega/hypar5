@@ -112,7 +112,7 @@
   });
 </script>
 
-<section class='fixed text-sm flex flex-col p-2 m-2 mt-2 bg-gray-200 rounded-md shadow-md opacity-75 hover:opacity-100 appearance-none z-[9999] w-[360px]'>
+<section class='fixed text-sm flex flex-col p-2 m-2 mt-8 bg-gray-200 rounded-md shadow-md opacity-75 hover:opacity-100 appearance-none z-[9999] w-[360px]'>
   <h5 class="my-0 py-0"><strong>Hypar geometry of concrete shells</strong></h5>
   <div class="flex flex-row w-auto space-x-2 my-2">
     <button 
