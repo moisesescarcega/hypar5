@@ -4,11 +4,11 @@
         "hypar": "Jacaranda", 
         "mantos": 3, 
         "vertexX": 22, 
-        "vertexY": 17, 
+        "vertexY": 15, 
         "vertexZ": 19, 
-        "clipV1": 16, 
-        "clipV2": 7,
-        "offset": 1.5 
+        "clipV1": 47, 
+        "clipV2": 4.6,
+        "offset": 5.5 
       },
       { 
         "hypar": "Pabellón Oslo", 
