@@ -8,7 +8,7 @@
   import { Environment, OrbitControls } from '@threlte/extras';
   import Ruled from './Ruled.svelte'; 
   import Nurbs from './Nurbs.svelte';
-  let { mantos, vertexX, vertexY, vertexZ, offset, clipV1, clipV2, segments, showRuled } = $props();
+  let { mantos, vertexX, vertexY, vertexZ, offset, clipV1, clipV2, segments, showRuled, isPlaying } = $props();
 
   onMount(() => {
     const {renderer} = useThrelte() as {renderer: WebGLRenderer};
@@ -40,7 +40,7 @@
   fov={50}
 >
 <OrbitControls
-  autoRotate
+  autoRotate={isPlaying}
   enableZoom={true}
   enableDamping
   autoRotateSpeed={0.5}

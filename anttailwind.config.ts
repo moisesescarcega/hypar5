@@ -1,7 +1,11 @@
-/** @type {import('tailwindcss').Config} */
+import type { Config } from 'tailwindcss';
+import plugin from 'flowbite/plugin';
+
 export default {
-  content: [ './src/**/*.{html,js,ts,jsx,tsx,svelte}', './node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}' ],
+  content: ['./src/**/*.{html,js,svelte,ts}', './node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}'],
+  plugins: [plugin],
   darkMode: 'selector',
+
   theme: {
     extend: {
       zIndex: {
@@ -73,7 +77,6 @@ export default {
         // slate
         primary: {"50":"#f8fafc","100":"#f1f5f9","200":"#e2e8f0","300":"#cbd5e1","400":"#94a3b8","500":"#64748b","600":"#475569","700":"#334155","800":"#1e293b","900":"#0f172a"}
       }
-    },
-  },
-  plugins: [import('flowbite/plugin')],
-}
+    }
+  }
+} as Config;
