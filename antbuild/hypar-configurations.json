@@ -1,0 +1,40 @@
+{
+    "configurations": [
+      { 
+        "hypar": "Pabellón Oslo", 
+        "mantos": 3, 
+        "vertexX": 22, 
+        "vertexY": 14, 
+        "vertexZ": 26, 
+        "clipV1": 16, 
+        "clipV2": 5 
+      },
+      { 
+        "hypar": "Casino de la Selva", 
+        "mantos": 5, 
+        "vertexX": 30, 
+        "vertexY": 10, 
+        "vertexZ": 27, 
+        "clipV1": 25, 
+        "clipV2": 7.5 
+      },
+      { 
+        "hypar": "San Antonio de las Huertas", 
+        "mantos": 4, 
+        "vertexX": 30, 
+        "vertexY": 14, 
+        "vertexZ": 43, 
+        "clipV1": 0, 
+        "clipV2": 9 
+      },
+      { 
+        "hypar": "Manantiales", 
+        "mantos": 8, 
+        "vertexX": 37, 
+        "vertexY": 9, 
+        "vertexZ": 26, 
+        "clipV1": 19, 
+        "clipV2": 12 
+      }
+    ]
+  }
