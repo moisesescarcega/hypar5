@@ -3,7 +3,7 @@
   import {Suspense} from '@threlte/extras';
   import {Text} from '@threlte/extras';
   import { onMount } from 'svelte';
-  import { type WebGLRenderer } from 'three';
+  import { DoubleSide, type WebGLRenderer } from 'three';
   import { T } from '@threlte/core';
   import { Environment, OrbitControls } from '@threlte/extras';
   import Ruled from './Ruled.svelte'; 
@@ -50,6 +50,10 @@
 <T.AmbientLight position={[0, 0, 0]} intensity={Math.PI / 8} />
 <!-- <T.SpotLight position={[6, 3, 4]} intensity={Math.PI} /> -->
 <Environment url='/venice_sunset_1k.hdr' />
+<!-- <T.Mesh>
+  <T.SphereGeometry args={[50, 30, 30]} />
+  <T.MeshBasicMaterial color="#dd6677" side={DoubleSide} />
+</T.Mesh> -->
 
 {#if showRuled}
 
